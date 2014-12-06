@@ -5,12 +5,6 @@
 (tool-bar-mode -1)
 (setq inhibit-startup-message t)
 
-; Use helm-mode
-; helm-mode is actually turned on later, after loading melpa
-(global-set-key (kbd "C-c h") 'helm-mini)
-
-; Use helm M-x
-(global-set-key (kbd "M-x") 'helm-M-x)
 
 ; Useful modes
 (show-paren-mode 1)
@@ -107,10 +101,6 @@
 		(set-face-foreground 'mode-line (cdr color))))))
 
 
-; Define mx in normal mode -> M-x
-(define-key evil-normal-state-map "m" nil)
-;(define-key evil-motion-state-map "mx" 'execute-extended-command)
-(define-key evil-motion-state-map "mx" 'helm-M-x)
 
 ; Make hjkl sensible on colemak
 (defun to-colemak () 
@@ -156,8 +146,19 @@
     (setq-default scroll-up-aggressively 0.01
       scroll-down-aggressively 0.01)
 
+(semantic-mode 1)
+
 (require 'helm-config)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+(global-set-key (kbd "C-c h") 'helm-mini)
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "C-c h o") 'helm-occur)
 (helm-mode 1)
+
+(define-key evil-normal-state-map "m" nil)
+(define-key evil-motion-state-map "mx" 'helm-M-x)
+
 
 (set-face-attribute 'default nil :height 100)
 
