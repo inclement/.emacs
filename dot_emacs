@@ -44,11 +44,11 @@
       (cons '("\\.m$" . octave-mode) auto-mode-alist))
 
 
-; auctex
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
-  (require 'tex)
-    (TeX-global-PDF-mode t)
+;; ; auctex
+;; (load "auctex.el" nil t t)
+;; (load "preview-latex.el" nil t t)
+;;   (require 'tex)
+;;     (TeX-global-PDF-mode t)
 
 ; julia-mode
 (require 'julia-mode)
@@ -151,9 +151,10 @@
 (require 'helm-config)
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
-(global-set-key (kbd "C-c h") 'helm-mini)
+;;(global-set-key (kbd "C-c h") 'helm-mini)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-x b") 'helm-mini)
 (helm-mode 1)
 
 (define-key evil-normal-state-map "m" nil)
