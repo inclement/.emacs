@@ -153,10 +153,13 @@
 (global-unset-key (kbd "C-x c"))
 ;;(global-set-key (kbd "C-c h") 'helm-mini)
 (global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-c h o") 'helm-occur)
+;(global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-c h o") 'helm-swoop)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (helm-mode 1)
+(require 'helm-projectile)
+(helm-projectile-on)
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
@@ -168,6 +171,31 @@
 (define-key evil-motion-state-map "mx" 'helm-M-x)
 (define-key evil-motion-state-map "ms" 'helm-semantic-or-imenu)
 (define-key evil-motion-state-map "mt" 'helm-command-prefix)
+(define-key evil-motion-state-map "mv" 'magit-status)
+
+
+(define-key evil-motion-state-map "mp" 'projectile-command-map)
+
+
+(projectile-global-mode)
+(setq projectile-enable-caching t)
+(setq projectile-file-exists-remote-cache-expire nil)
+
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(define-key evil-motion-state-map "mc" nil)
+(define-key evil-motion-state-map "mcc" 'flycheck-buffer)
+(define-key evil-motion-state-map "mct" 'flycheck-mode)
+(define-key evil-motion-state-map "mch" 'helm-flycheck)
+(define-key evil-motion-state-map "mce" 'flycheck-list-errors)
+(define-key evil-motion-state-map "mcn" 'flycheck-next-error)
+(define-key evil-motion-state-map "mcp" 'flycheck-previous-error)
+(define-key evil-motion-state-map "mcf" 'flycheck-first-error)
+
+
+(require 'undo-tree)
+(global-undo-tree-mode)
+(define-key evil-motion-state-map "mu" 'undo-tree-visualize)
 
 
 (set-face-attribute 'default nil :height 100)
