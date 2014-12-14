@@ -54,7 +54,8 @@
 ;; (load "auctex.el" nil t t)
 ;; (load "preview-latex.el" nil t t)
 ;;   (require 'tex)
-;;     (TeX-global-PDF-mode t)
+;;(TeX-global-PDF-mode t)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 
 ; julia-mode
 (require 'julia-mode)
@@ -76,6 +77,7 @@
 (add-to-list 'load-path "~/.emacs.d/evil")
 (require 'evil)
 (evil-mode 1)
+(add-to-list 'evil-insert-state-modes 'git-commit-mode)
 
 (when (> emacs-major-version 23)
         (require 'package)
@@ -94,17 +96,17 @@
 (global-set-key [f1] 'magit-status)
 
 ;; change mode-line color by evil state
-(lexical-let ((default-color (cons (face-background 'mode-line)
-				   (face-foreground 'mode-line))))
-  (add-hook 'post-command-hook
-	    (lambda ()
-	      (let ((color (cond ((minibufferp) default-color)
-				 ((evil-insert-state-p) '("#e80000" . "#ffffff"))
-				 ((evil-emacs-state-p)  '("#444488" . "#ffffff"))
-				 ((buffer-modified-p)   '("#006fa0" . "#ffffff"))
-				 (t default-color))))
-		(set-face-background 'mode-line (car color))
-		(set-face-foreground 'mode-line (cdr color))))))
+;; (lexical-let ((default-color (cons (face-background 'mode-line)
+;; 				   (face-foreground 'mode-line))))
+;;   (add-hook 'post-command-hook
+;; 	    (lambda ()
+;; 	      (let ((color (cond ((minibufferp) default-color)
+;; 				 ((evil-insert-state-p) '("#e80000" . "#ffffff"))
+;; 				 ((evil-emacs-state-p)  '("#444488" . "#ffffff"))
+;; 				 ((buffer-modified-p)   '("#006fa0" . "#ffffff"))
+;; 				 (t default-color))))
+;; 		(set-face-background 'mode-line (car color))
+;; 		(set-face-foreground 'mode-line (cdr color))))))
 
 
 
@@ -159,8 +161,8 @@
 (global-unset-key (kbd "C-x c"))
 ;;(global-set-key (kbd "C-c h") 'helm-mini)
 (global-set-key (kbd "M-x") 'helm-M-x)
-;(global-set-key (kbd "C-c h o") 'helm-occur)
-(global-set-key (kbd "C-c h o") 'helm-swoop)
+(global-set-key (kbd "C-c h o") 'helm-occur)
+;(global-set-key (kbd "C-c h o") 'helm-swoop)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (helm-mode 1)
@@ -172,12 +174,16 @@
 (define-key helm-map (kbd "C-z") 'helm-select-action)
 (define-key helm-map (kbd "C-e") 'helm-previous-line)
 (define-key helm-map (kbd "C-h") 'helm-find-files-up-one-level)
+;(define-key helm-map (kbd "C-x C-f") 'helm-find-files)
 
 (define-key evil-normal-state-map "m" nil)
 (define-key evil-motion-state-map "mx" 'helm-M-x)
 (define-key evil-motion-state-map "ms" 'helm-semantic-or-imenu)
 (define-key evil-motion-state-map "mt" 'helm-command-prefix)
 (define-key evil-motion-state-map "mv" 'magit-status)
+;(define-key evil-motion-state-map "mf" 'find-file)
+
+(define-key evil-motion-state-map "mo" 'helm-swoop)
 
 
 (define-key evil-motion-state-map "mp" 'projectile-command-map)
@@ -202,6 +208,13 @@
 (require 'undo-tree)
 (global-undo-tree-mode)
 (define-key evil-motion-state-map "mu" 'undo-tree-visualize)
+
+(jedi:setup)
+
+;(sml/setup)
+;(setq sml/theme 'automatic)
+
+(nyan-mode)
 
 
 (set-face-attribute 'default nil :height 100)
