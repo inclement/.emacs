@@ -183,6 +183,7 @@
 (define-key evil-motion-state-map "mt" 'helm-command-prefix)
 (define-key evil-motion-state-map "mv" 'magit-status)
 ;(define-key evil-motion-state-map "mf" 'find-file)
+(define-key evil-motion-state-map "mb" 'helm-mini)
 
 (define-key evil-motion-state-map "mo" 'helm-swoop)
 
