@@ -78,6 +78,7 @@
 (require 'evil)
 (evil-mode 1)
 (add-to-list 'evil-insert-state-modes 'git-commit-mode)
+(evil-ex-define-cmd "W" 'save-buffer)
 
 (when (> emacs-major-version 23)
         (require 'package)
