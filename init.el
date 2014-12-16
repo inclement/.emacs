@@ -182,7 +182,7 @@
 (define-key evil-motion-state-map "ms" 'helm-semantic-or-imenu)
 (define-key evil-motion-state-map "mt" 'helm-command-prefix)
 (define-key evil-motion-state-map "mv" 'magit-status)
-;(define-key evil-motion-state-map "mf" 'find-file)
+(define-key evil-motion-state-map "mf" 'find-file)
 (define-key evil-motion-state-map "mb" 'helm-mini)
 
 (define-key evil-motion-state-map "mo" 'helm-swoop)
@@ -211,9 +211,10 @@
 (global-undo-tree-mode)
 (define-key evil-motion-state-map "mu" 'undo-tree-visualize)
 
-(jedi:setup)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)    
 
-;(sml/setup)
+(sml/setup)
 ;(setq sml/theme 'automatic)
 
 (nyan-mode)
