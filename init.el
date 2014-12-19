@@ -184,6 +184,8 @@
 (define-key evil-motion-state-map "mv" 'magit-status)
 (define-key evil-motion-state-map "mf" 'find-file)
 (define-key evil-motion-state-map "mb" 'helm-mini)
+(define-key evil-motion-state-map "mr" 'helm-resume)
+
 
 (define-key evil-motion-state-map "mo" 'helm-swoop)
 
@@ -206,6 +208,13 @@
 (define-key evil-motion-state-map "mcp" 'flycheck-previous-error)
 (define-key evil-motion-state-map "mcf" 'flycheck-first-error)
 
+;; (set-default-font "Inconsolata-12")
+;; (set-default-font "Bitstream Vera Sans Mono 11")
+;; (set-default-font "Bitstream Vera Sans Mono 10")
+;; (set-default-font "Dejavu Sans Mono 11")
+(set-default-font "Dejavu Sans Mono-10")
+(add-to-list 'default-frame-alist
+             '(font . "Dejavu Sans Mono-10"))
 
 (require 'undo-tree)
 (global-undo-tree-mode)
