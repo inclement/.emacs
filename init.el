@@ -16,8 +16,14 @@
 (show-paren-mode 1)
 (column-number-mode 1)
 
+; Org-mode stuff
+(setq org-log-done 'time)
+
 ; Use mail mode with mutt
 (setq auto-mode-alist (append '(("/tmp/mutt.*" . mail-mode)) auto-mode-alist))
+
+; Auto-save undo-tree history
+(setq undo-tree-auto-save-history 1)
 
 ; Do tabs right
 (setq-default indent-tabs-mode nil)
@@ -67,18 +73,22 @@
 ;; (add-to-list 'load-path "/home/asandy/.emacs.d/python-mode.el-6.1.3/") 
 ;; (setq py-install-directory "/home/asandy/.emacs.d/python-mode.el-6.1.3/") 
 ;; (require 'python-mode)
-(add-to-list 'load-path "/home/asandy/devel/python-mode/") 
-(setq py-install-directory "/home/asandy/devel/python-mode/")
-(require 'python-mode)
-(setq py-shell-name "ipython")
+;; (add-to-list 'load-path "/home/asandy/devel/python-mode/") 
+;; (setq py-install-directory "/home/asandy/devel/python-mode/")
+;; (require 'python-mode)
+;; (setq py-shell-name "ipython")
 
 
 ; evil-mode
 (add-to-list 'load-path "~/.emacs.d/evil")
 (require 'evil)
 (evil-mode 1)
-(add-to-list 'evil-insert-state-modes 'git-commit-mode)
+(add-to-list 'evil-insert-state-modes 'git-commit)
+(add-hook 'with-editor-mode-hook 'evil-insert-state)
 (evil-ex-define-cmd "W" 'save-buffer)
+(add-to-list 'evil-emacs-state-modes 'magit-popup-mode)
+(add-to-list 'evil-emacs-state-modes 'magit-revision-mode)
+(add-to-list 'evil-emacs-state-modes 'magit-mode)
 
 (when (> emacs-major-version 23)
         (require 'package)
@@ -108,6 +118,11 @@
 ;; 				 (t default-color))))
 ;; 		(set-face-background 'mode-line (car color))
 ;; 		(set-face-foreground 'mode-line (cdr color))))))
+
+
+; macro to turn Mark's mathematica polynomials to valid python
+(fset 'demathematica
+   (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ([58 37 115 47 73 47 backspace backspace 32 73 32 47 42 49 106 42 47 103 return 58 37 115 47 32 92 40 40 91 91 up up return 58 37 115 47 32 32 43 32 backspace backspace 92 43 43 up return 103 103 48 116 40 97 40 escape 65 41 escape] 0 "%d")) arg)))
 
 
 
@@ -163,6 +178,7 @@
 ;;(global-set-key (kbd "C-c h") 'helm-mini)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-c h g") 'helm-do-grep)
 ;(global-set-key (kbd "C-c h o") 'helm-swoop)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 (global-set-key (kbd "C-x b") 'helm-mini)
@@ -198,7 +214,7 @@
 (setq projectile-file-exists-remote-cache-expire nil)
 
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
+;(add-hook 'after-init-hook #'global-flycheck-mode)
 (define-key evil-motion-state-map "mc" nil)
 (define-key evil-motion-state-map "mcc" 'flycheck-buffer)
 (define-key evil-motion-state-map "mct" 'flycheck-mode)
@@ -223,11 +239,20 @@
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)    
 
-(sml/setup)
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map "\r" 'newline-and-indent)))
+
+(add-hook 'python-mode-hook
+          (lambda ()
+            (define-key python-mode-map "\r" 'newline-and-indent)))
+
+;(sml/setup)
 ;(setq sml/theme 'automatic)
 
 (nyan-mode)
 
+(setq auto-mode-alist (cons '("\.cl$" . c-mode) auto-mode-alist))
 
 (set-face-attribute 'default nil :height 100)
 
