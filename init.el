@@ -22,13 +22,15 @@
 ; Use mail mode with mutt
 (setq auto-mode-alist (append '(("/tmp/mutt.*" . mail-mode)) auto-mode-alist))
 
-; Auto-save undo-tree history
-(setq undo-tree-auto-save-history 1)
+;; ; Auto-save undo-tree history
+;; (setq undo-tree-auto-save-history 1)
 
 ; Do tabs right
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
+
+(setq c-basic-offset 4)
 
 ; Do backups sensibly
 (setq backup-directory-alist `(("." . "~/.saves")))
@@ -80,7 +82,7 @@
 
 
 ; evil-mode
-(add-to-list 'load-path "~/.emacs.d/evil")
+;; (add-to-list 'load-path "~/.emacs.d/evil")
 (require 'evil)
 (evil-mode 1)
 (add-to-list 'evil-insert-state-modes 'git-commit)
@@ -198,7 +200,7 @@
 (define-key evil-motion-state-map "ms" 'helm-semantic-or-imenu)
 (define-key evil-motion-state-map "mt" 'helm-command-prefix)
 (define-key evil-motion-state-map "mv" 'magit-status)
-(define-key evil-motion-state-map "mf" 'find-file)
+(define-key evil-motion-state-map "mf" 'helm-find-files)
 (define-key evil-motion-state-map "mb" 'helm-mini)
 (define-key evil-motion-state-map "mr" 'helm-resume)
 
@@ -207,7 +209,6 @@
 
 
 (define-key evil-motion-state-map "mp" 'projectile-command-map)
-
 
 (projectile-global-mode)
 (setq projectile-enable-caching t)
@@ -223,6 +224,21 @@
 (define-key evil-motion-state-map "mcn" 'flycheck-next-error)
 (define-key evil-motion-state-map "mcp" 'flycheck-previous-error)
 (define-key evil-motion-state-map "mcf" 'flycheck-first-error)
+
+(define-key evil-motion-state-map "mi" nil)
+(define-key evil-motion-state-map "mit" 'helm-gtags-find-tag)
+(define-key evil-motion-state-map "mis" 'helm-gtags-find-symbol)
+(define-key evil-motion-state-map "mig" 'helm-gtags-find-pattern)
+(define-key evil-motion-state-map "mip" 'helm-gtags-find-pattern)
+(define-key evil-motion-state-map "mir" 'helm-gtags-find-rtag)
+(define-key evil-motion-state-map "miq" 'helm-gtags-pop-stack)
+(define-key evil-motion-state-map "mih" 'helm-gtags-find-tag-from-here)
+(define-key evil-motion-state-map "mi." 'helm-gtags-find-tag-from-here)
+(define-key evil-motion-state-map "miS" 'helm-gtags-select)
+(define-key evil-motion-state-map "mia" 'helm-gtags-select)
+(define-key evil-motion-state-map "mif" 'helm-gtags-tags-in-this-function)
+(define-key evil-motion-state-map "miu" 'helm-gtags-show-stack)
+
 
 ;; (set-default-font "Inconsolata-12")
 ;; (set-default-font "Bitstream Vera Sans Mono 11")
@@ -247,8 +263,9 @@
           (lambda ()
             (define-key python-mode-map "\r" 'newline-and-indent)))
 
-;(sml/setup)
-;(setq sml/theme 'automatic)
+(setq sml/no-confirm-load-theme t)
+(setq sml/theme 'light)
+(sml/setup)
 
 (nyan-mode)
 
